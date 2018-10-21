@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="NavigationExample_v1._0.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NavigationExample_v1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <!--Сделать ресурсы, если успеешь-->
+    <Grid>
+        <StackPanel Margin="50" VerticalAlignment="Center">
+            <TextBlock Text="Enter login" HorizontalAlignment="Center" />
+            <TextBox Name="txtLogin" HorizontalAlignment="Center" Width="300" TextChanged="txtLogin_TextChanged"/>
+            <TextBlock Text="Enter password" HorizontalAlignment="Center"/>
+            <PasswordBox Name="txtPassword" HorizontalAlignment="Center" Width="300" PasswordRevealMode="Hidden" PasswordChanged="txtPassword_PasswordChanged"/>
+            <Button Name="btnEnter" HorizontalAlignment="Center" Content="Enter" IsEnabled="False"/>
+            <TextBox Name="txtInfo" HorizontalAlignment="Center" Width="300"/>
+        </StackPanel>
+    </Grid>
+</Page>
