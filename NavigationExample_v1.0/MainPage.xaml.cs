@@ -88,6 +88,7 @@ namespace NavigationExample_v1._0
         {
             btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password);
         }
+
         /// <summary>
         /// Проверяет заполнены ли поля txtLogin и txtPassword 
         /// </summary>
@@ -103,6 +104,33 @@ namespace NavigationExample_v1._0
             bool IsPasswordFilled = !(string.IsNullOrEmpty(password)); // проверяет не заполнена ли строка пароля
             bool result = IsLoginFilled & IsPasswordFilled; // проверяет не заполнены ли строки логин и пароль
             return result; // возвращает ответ(необходим для отладки)
+        }
+
+        /// <summary>
+        /// Обработчик событий для кнопки Enter, в котором будет возвращаться текст для случая, если данные верны и для случая, если данные не верны
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEnter_Click(object sender, RoutedEventArgs e)
+        {
+            entered_login = txtLogin.Text; //переменная хранит в себе значение полученное из поля логина
+            entered_password = txtPassword.Password; //переменная хранит в себе значение полученное из поля пароля
+
+            bool isLoginTrue = IsLoginTrue(entered_login, saved_login);
+            bool isPasswordTrue = IsPasswordTrue(entered_password, saved_password);
+            
+            if (isLoginTrue && isPasswordTrue) // условие, если логин и пароль верны, ТО цвет зеленый и сообщение о том что введено верное значение
+            {
+                SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Green);
+                txtInfo.Background = txtColorTrue;
+                txtInfo.Text = "entered the correct values";
+            }
+            else // в противном случае красный цвет и сообщение о том что введено неверное значение
+            {
+                SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Red);
+                txtInfo.Background = txtColorTrue;
+                txtInfo.Text = "entered wrong values";
+            }
         }
         #endregion
     }
