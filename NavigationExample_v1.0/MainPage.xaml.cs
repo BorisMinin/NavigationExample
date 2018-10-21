@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 // Объявим переменные 
 // Зададим значения для сохраненных данных(saved_login, saved_password)
-// -----------С переменными закончено-----------
+// ----------С переменными закончено----------
 // Создадим обработчики событий
 
 namespace NavigationExample_v1._0
