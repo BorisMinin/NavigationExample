@@ -15,23 +15,59 @@ using Windows.UI.Xaml.Navigation;
 // Объявим переменные 
 // Зададим значения для сохраненных данных(saved_login, saved_password)
 // ----------С переменными закончено----------
+// Напишем функции, которые будут сверять введенные значения с сохраненными
 // Создадим обработчики событий
+// Создадим функцию которая проверяет заполнены ли поля txtLogin и txtPassword
+// Добавим обработчки событий для кнопки Enter
 
 namespace NavigationExample_v1._0
 {
     public sealed partial class MainPage : Page
     {
         #region Переменные
-        string saved_login = "Борис";
-        string saved_password = "1111";
-        string entered_login;
-        string entered_password;
+        string saved_login = "Борис"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем логин
+        string saved_password = "1111"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем пароль
+        string entered_login; // Переменная для хранения введенного пользователем значения login 
+        string entered_password; // Переменная для хранения введенного пользователем значения password
         #endregion
 
         public MainPage()
         {
             this.InitializeComponent();
         }
+
+        #region Функции проверки введенных значений с сохраненными //позже надо вынести всё в отдельную функцию
+        /// <summary>
+        /// Функция сравнивает значение введенное пользователем(login) с сохраненным
+        /// </summary>
+        /// <param name="entered">введенное значение</param>
+        /// <param name="saved">сохраненное значение</param>
+        /// <returns>
+        /// true - если совпадает
+        /// falce - если не совпадает
+        /// </returns>
+        bool IsLoginTrue(string entered, string saved)
+        {
+            if (entered == saved)
+                return true;
+            else return false;
+        }
+        /// <summary>
+        /// Функция сравнивает значение введенное пользователем(password) с сохраненным
+        /// </summary>
+        /// <param name="entered">введенное значение</param>
+        /// <param name="saved">сохраненное значение</param>
+        /// <returns>
+        /// true - если совпадает
+        /// falce - если не совпадает
+        /// </returns>
+        bool IsPasswordTrue(string entered, string saved)
+        {
+            if (entered == saved)
+                return true;
+            else return false;
+        }
+        #endregion
 
         #region Обработчики событий
         /// <summary>
@@ -41,7 +77,7 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password);
         }
         /// <summary>
         /// Обработчик событий для поля Password
@@ -50,7 +86,23 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password);
+        }
+        /// <summary>
+        /// Проверяет заполнены ли поля txtLogin и txtPassword 
+        /// </summary>
+        /// <param name="login">логин</param>
+        /// <param name="password">пароль</param>
+        /// <returns>
+        /// true - если обе строки заполнены
+        /// false - если обе строки пусты
+        /// </returns>
+        bool IsLoginAndPasswordFilled(string login, string password)
+        {
+            bool IsLoginFilled = !(string.IsNullOrEmpty(login)); // проверяет не заполнена ли строка логина
+            bool IsPasswordFilled = !(string.IsNullOrEmpty(password)); // проверяет не заполнена ли строка пароля
+            bool result = IsLoginFilled & IsPasswordFilled; // проверяет не заполнены ли строки логин и пароль
+            return result; // возвращает ответ(необходим для отладки)
         }
         #endregion
     }
