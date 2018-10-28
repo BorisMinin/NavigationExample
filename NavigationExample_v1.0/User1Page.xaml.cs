@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,7 +25,15 @@ namespace NavigationExample_v1._0
     {
         public User1Page()
         {
+            var currentView = SystemNavigationManager.GetForCurrentView();
+            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            currentView.BackRequested += backButton_Tapped;
             this.InitializeComponent();
+        }
+
+        private void backButton_Tapped(object sender, BackRequestedEventArgs e)
+        {
+            if (Frame.CanGoBack) Frame.GoBack();
         }
     }
 }
