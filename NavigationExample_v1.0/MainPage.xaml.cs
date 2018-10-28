@@ -25,8 +25,12 @@ namespace NavigationExample_v1._0
     public sealed partial class MainPage : Page
     {
         #region Переменные
-        string saved_login = "Борис"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем логин
-        string saved_password = "1111"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем пароль
+        string user1Login = "user1"; // Сохраненный логин для user1
+        string user1Password = "pass1"; // Сохраненный пароль для user1
+
+        string user2Login = "user2"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем логин
+        string user2Password = "pass2"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем пароль
+
         string entered_login; // Переменная для хранения введенного пользователем значения login 
         string entered_password; // Переменная для хранения введенного пользователем значения password
         #endregion
@@ -116,15 +120,15 @@ namespace NavigationExample_v1._0
             entered_login = txtLogin.Text; //переменная хранит в себе значение полученное из поля логина
             entered_password = txtPassword.Password; //переменная хранит в себе значение полученное из поля пароля
 
-            bool isLoginTrue = IsLoginTrue(entered_login, saved_login);
-            bool isPasswordTrue = IsPasswordTrue(entered_password, saved_password);
-            
-            if (isLoginTrue && isPasswordTrue) // условие, если логин и пароль верны, ТО цвет зеленый и сообщение о том что введено верное значение
-            {
-                SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Green);
-                txtInfo.Background = txtColorTrue;
-                txtInfo.Text = "entered the correct values";
-            }
+            bool isLoginOfUser1True = IsLoginTrue(entered_login, user1Login);
+            bool isPasswordOfUser1True = IsPasswordTrue(entered_password, user1Password);
+            bool isLoginOfUser2True = IsLoginTrue(entered_login, user2Login);
+            bool isPasswordOfUser2True = IsPasswordTrue(entered_password, user2Password);
+
+            if (isLoginOfUser1True && isPasswordOfUser1True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
+                Frame.Navigate(typeof(User1Page));
+            else if (isLoginOfUser2True && isPasswordOfUser2True) // условие, если логин и пароль верны, ТО совершается переход на страницу User2Page
+                Frame.Navigate(typeof(User2Page));
             else // в противном случае красный цвет и сообщение о том что введено неверное значение
             {
                 SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Red);
