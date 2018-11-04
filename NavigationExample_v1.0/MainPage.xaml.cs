@@ -72,6 +72,22 @@ namespace NavigationExample_v1._0
                 return true;
             else return false;
         }
+        /// <summary>
+        /// Проверяет заполнены ли поля txtLogin и txtPassword 
+        /// </summary>
+        /// <param name="login">логин</param>
+        /// <param name="password">пароль</param>
+        /// <returns>
+        /// true - если обе строки заполнены
+        /// false - если обе строки пусты
+        /// </returns>
+        bool IsLoginAndPasswordFilled(string login, string password)
+        {
+            bool IsLoginFilled = !(string.IsNullOrEmpty(login)); // проверяет не заполнена ли строка логина
+            bool IsPasswordFilled = !(string.IsNullOrEmpty(password)); // проверяет не заполнена ли строка пароля
+            bool result = IsLoginFilled & IsPasswordFilled; // проверяет не заполнены ли строки логин и пароль
+            return result; // возвращает ответ(необходим для отладки)
+        }
         #endregion
 
         #region Обработчики событий
@@ -95,23 +111,6 @@ namespace NavigationExample_v1._0
         }
 
         /// <summary>
-        /// Проверяет заполнены ли поля txtLogin и txtPassword 
-        /// </summary>
-        /// <param name="login">логин</param>
-        /// <param name="password">пароль</param>
-        /// <returns>
-        /// true - если обе строки заполнены
-        /// false - если обе строки пусты
-        /// </returns>
-        bool IsLoginAndPasswordFilled(string login, string password)
-        {
-            bool IsLoginFilled = !(string.IsNullOrEmpty(login)); // проверяет не заполнена ли строка логина
-            bool IsPasswordFilled = !(string.IsNullOrEmpty(password)); // проверяет не заполнена ли строка пароля
-            bool result = IsLoginFilled & IsPasswordFilled; // проверяет не заполнены ли строки логин и пароль
-            return result; // возвращает ответ(необходим для отладки)
-        }
-
-        /// <summary>
         /// Обработчик событий для кнопки Enter, в котором будет возвращаться текст для случая, если данные верны и для случая, если данные не верны
         /// </summary>
         /// <param name="sender"></param>
@@ -127,9 +126,7 @@ namespace NavigationExample_v1._0
             bool isPasswordOfUser2True = IsPasswordTrue(entered_password, user2Password);
 
             if (isLoginOfUser1True && isPasswordOfUser1True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
-                Frame.Navigate(typeof(User1Page));
-            else if (isLoginOfUser2True && isPasswordOfUser2True) // условие, если логин и пароль верны, ТО совершается переход на страницу User2Page
-                Frame.Navigate(typeof(User2Page));
+                Frame.Navigate(typeof(User1Page), txtLogin.Text);
             else // в противном случае красный цвет и сообщение о том что введено неверное значение
             {
                 SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Red);
@@ -137,31 +134,6 @@ namespace NavigationExample_v1._0
                 txtInfo.Text = "entered wrong values";
             }
         }
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    entered_login = txtLogin.Text; //переменная хранит в себе значение полученное из поля логина
-        //    entered_password = txtPassword.Password; //переменная хранит в себе значение полученное из поля пароля
-
-        //    bool isLoginOfUser1True = IsLoginTrue(entered_login, user1Login);
-        //    bool isPasswordOfUser1True = IsPasswordTrue(entered_password, user1Password);
-        //    bool isLoginOfUser2True = IsLoginTrue(entered_login, user2Login);
-        //    bool isPasswordOfUser2True = IsPasswordTrue(entered_password, user2Password);
-
-        //    if (isLoginOfUser1True && isPasswordOfUser1True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
-        //    {
-        //        Frame.Navigate(typeof(User1Page));
-
-        //    }
-        //    else if (isLoginOfUser2True && isPasswordOfUser2True) // условие, если логин и пароль верны, ТО совершается переход на страницу User2Page
-        //        Frame.Navigate(typeof(User2Page));
-        //    else // в противном случае красный цвет и сообщение о том что введено неверное значение
-        //    {
-        //        SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Red);
-        //        txtInfo.Background = txtColorTrue;
-        //        txtInfo.Text = "entered wrong values";
-        //    }
-        //    base.OnNavigatedTo(e);
-        //}
         #endregion
         //private void backButton_Tapped(object sender, BackRequestedEventArgs e)
         //{

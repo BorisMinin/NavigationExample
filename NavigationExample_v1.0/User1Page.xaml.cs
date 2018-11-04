@@ -14,26 +14,44 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 
-// Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace NavigationExample_v1._0
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
     public sealed partial class User1Page : Page
     {
+        /// <summary>
+        /// Реализованна возможность возврата на предыдущую страницу посредством кнопки "назад" в верхней левой части экрана
+        /// </summary>
         public User1Page()
         {
             var currentView = SystemNavigationManager.GetForCurrentView();
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            currentView.BackRequested += backButton_Tapped;
+            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible; // кнопка видима
+            currentView.BackRequested += backButton_Tapped; // происходит подписка на событие
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Метод, в котором прописывается событие, которое произойдет когда кнопка будет нажата
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void backButton_Tapped(object sender, BackRequestedEventArgs e)
         {
             if (Frame.CanGoBack) Frame.GoBack();
+        }
+        /// <summary>
+        /// Метод позволяет поприветствовать того или иного пользователя, в зависимости от того, под каким ником, пользователь вошел в "систему"
+        /// </summary>
+        /// <param name="e">
+        /// Если user1, то "Welcome, user1"
+        /// Если user2, то "Welcome, user2"
+        /// </param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter.ToString() == "user1") // Если пользователь вошел в систему под ником user1, то его приветствуют как user1
+                txtBlockWelcome.Text = ($"Welcome, {e.Parameter.ToString()}"); 
+            else if (e.Parameter.ToString() == "user2") // Если пользователь вошел в систему под ником user2, то его приветствуют как user2
+                txtBlockWelcome.Text = ($"Welcome, {e.Parameter.ToString()}");
         }
     }
 }
