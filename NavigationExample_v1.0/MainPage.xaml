@@ -11,9 +11,12 @@
     <Grid>
         <StackPanel Margin="50" VerticalAlignment="Center">
             <TextBlock Text="Enter login" HorizontalAlignment="Center" />
-            <TextBox Name="txtLogin" HorizontalAlignment="Center" Width="300" TextChanged="txtLogin_TextChanged"/>
+            <TextBox Name="txtLogin" HorizontalAlignment="Center" Width="300"
+                     TextChanged="txtLogin_TextChanged" Text="user1"/>
             <TextBlock Text="Enter password" HorizontalAlignment="Center"/>
-            <PasswordBox Name="txtPassword" HorizontalAlignment="Center" Width="300" PasswordRevealMode="Hidden" PasswordChanged="txtPassword_PasswordChanged"/>
+            <PasswordBox Name="txtPassword" HorizontalAlignment="Center" Width="300"
+                         PasswordRevealMode="Hidden" Password="pass1"
+                         PasswordChanged="txtPassword_PasswordChanged"/>
             <Button Name="btnEnter" HorizontalAlignment="Center" Content="Enter" IsEnabled="False" Click="btnEnter_Click"/>
             <TextBox Name="txtInfo" HorizontalAlignment="Center" Width="300"/>
         </StackPanel>

@@ -127,6 +127,8 @@ namespace NavigationExample_v1._0
 
             if (isLoginOfUser1True && isPasswordOfUser1True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
                 Frame.Navigate(typeof(User1Page), txtLogin.Text);
+            else if (isLoginOfUser2True && isPasswordOfUser2True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
+                Frame.Navigate(typeof(User1Page), txtLogin.Text);
             else // в противном случае красный цвет и сообщение о том что введено неверное значение
             {
                 SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Red);
