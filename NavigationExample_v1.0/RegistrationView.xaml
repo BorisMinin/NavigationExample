@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="NavigationExample_v1._0.RegistrationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NavigationExample_v1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel Margin="290">
+            <TextBlock Text="New user registration" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Margin="50" VerticalAlignment="Center">
+            <TextBlock Text="Login" HorizontalAlignment="Center" />
+            <TextBox Name="txtLoginReg" HorizontalAlignment="Center" Width="300" TextChanged="TxtLoginReg_TextChanged"/>
+            <TextBlock Text="Password" HorizontalAlignment="Center" />
+            <PasswordBox Name="txtPasswReg" HorizontalAlignment="Center" Width="300"
+                         PasswordRevealMode="Hidden" PasswordChanged="TxtPasswReg_PasswordChanged"/>
+            <Button Name="btnRegistration" HorizontalAlignment="Center" Content="Registration" 
+                    Click="btnRegistration_Click" IsEnabled="False"/>
+        </StackPanel>
+    </Grid>
+</Page>

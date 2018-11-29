@@ -13,25 +13,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
-// Объявим переменные 
-// Зададим значения для сохраненных данных(saved_login, saved_password)
-// ----------С переменными закончено----------
-// Напишем функции, которые будут сверять введенные значения с сохраненными
-// Создадим обработчики событий
-// Создадим функцию которая проверяет заполнены ли поля txtLogin и txtPassword
-// Добавим обработчки событий для кнопки Enter
 
 namespace NavigationExample_v1._0
 {
     public sealed partial class MainPage : Page
     {
-        #region Переменные
-        string user1Login = "user1"; // Сохраненный логин для user1
-        string user1Password = "pass1"; // Сохраненный пароль для user1
-
-        string user2Login = "user2"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем логин
-        string user2Password = "pass2"; // Переменная хранит в себе значение, с которым будет сравниваться введеный пользователем пароль
-
+        #region Переменные и коллекции 
         string entered_login; // Переменная для хранения введенного пользователем значения login 
         string entered_password; // Переменная для хранения введенного пользователем значения password
         #endregion
@@ -41,7 +28,7 @@ namespace NavigationExample_v1._0
             this.InitializeComponent();
         }
 
-        #region Функции проверки введенных значений с сохраненными //позже надо вынести всё в отдельную функцию
+        #region Функции проверки введенных значений с сохраненными 
         /// <summary>
         /// Функция сравнивает значение введенное пользователем(login) с сохраненным
         /// </summary>
@@ -68,7 +55,7 @@ namespace NavigationExample_v1._0
         /// </returns>
         bool IsPasswordTrue(string entered, string saved)
         {
-            if (entered == saved)
+            if (entered == saved) 
                 return true;
             else return false;
         }
@@ -98,7 +85,7 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password);
+            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password); // Кнопка Enter будет доступна, если поля логин и пароль не будут заполнены
         }
         /// <summary>
         /// Обработчик событий для поля Password
@@ -107,7 +94,7 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password);
+            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password); // Кнопка Enter будет доступна, если поля логин и пароль не будут заполнены
         }
 
         /// <summary>
@@ -117,37 +104,30 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
+            var list = UserRepository.AllUsers(); // инициализация класса UserRepository
+
             entered_login = txtLogin.Text; //переменная хранит в себе значение полученное из поля логина
             entered_password = txtPassword.Password; //переменная хранит в себе значение полученное из поля пароля
 
-            bool isLoginOfUser1True = IsLoginTrue(entered_login, user1Login);
-            bool isPasswordOfUser1True = IsPasswordTrue(entered_password, user1Password);
-            bool isLoginOfUser2True = IsLoginTrue(entered_login, user2Login);
-            bool isPasswordOfUser2True = IsPasswordTrue(entered_password, user2Password);
-
-            if (isLoginOfUser1True && isPasswordOfUser1True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
-                Frame.Navigate(typeof(User1Page), txtLogin.Text);
-            else if (isLoginOfUser2True && isPasswordOfUser2True) // условие, если логин и пароль верны, ТО совершается переход на страницу User1Page
-                Frame.Navigate(typeof(User1Page), txtLogin.Text);
-            else // в противном случае красный цвет и сообщение о том что введено неверное значение
+            /// <summary>
+            /// осуществляет навигацию на UserPage в случае если данные введены корректно, а в случае если данные введены некорректно, осуществляет навигацию на RegistrationView
+            /// </summary>
+            foreach (User user in list)
             {
-                SolidColorBrush txtColorTrue = new SolidColorBrush(Windows.UI.Colors.Red);
-                txtInfo.Background = txtColorTrue;
-                txtInfo.Text = "entered wrong values";
+                if (user.Login == entered_login & user.Password == entered_password) // Если введенные логин и пароль, совпадают с сохраненными, то осуществляется навигация на страницу UserPage 
+                {
+                    txtLogin.Text = ""; 
+                    txtPassword.Password = "";
+                    Frame.Navigate(typeof(UserPage), user.Login); // Осуществляется навигация на страницу UserPage
+                }
+                else // В противном случае осуществляется навигация на страницу RegistrationView
+                {
+                    txtLogin.Text = "";
+                    txtPassword.Password = "";
+                    Frame.Navigate(typeof(RegistrationView)); // Осуществляется навигация на страницу RegistrationView
+                }
             }
         }
         #endregion
-        //private void backButton_Tapped(object sender, BackRequestedEventArgs e)
-        //{
-        //    if (Frame.CanGoBack) Frame.GoBack();
-        //}
-
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    base.OnNavigatedFrom(e);
-        //    var currentView = SystemNavigationManager.GetForCurrentView();
-        //    currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-        //    currentView.BackRequested -= backButton_Tapped;
-        //}
     }
 }

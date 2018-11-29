@@ -16,19 +16,18 @@ using Windows.UI.Core;
 
 namespace NavigationExample_v1._0
 {
-    public sealed partial class User1Page : Page
+    public sealed partial class UserPage : Page
     {
         /// <summary>
         /// Реализованна возможность возврата на предыдущую страницу посредством кнопки "назад" в верхней левой части экрана
         /// </summary>
-        public User1Page()
+        public UserPage()
         {
             var currentView = SystemNavigationManager.GetForCurrentView();
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible; // кнопка видима
             currentView.BackRequested += backButton_Tapped; // происходит подписка на событие
             this.InitializeComponent();
         }
-
         /// <summary>
         /// Метод, в котором прописывается событие, которое произойдет когда кнопка будет нажата
         /// </summary>
@@ -49,9 +48,11 @@ namespace NavigationExample_v1._0
         {
             base.OnNavigatedTo(e);
             if (e.Parameter.ToString() == "user1") // Если пользователь вошел в систему под ником user1, то его приветствуют как user1
-                txtBlockWelcome.Text = ($"Welcome, {e.Parameter.ToString()}"); 
+                txtBlockWelcome.Text = ($"Welcome, {e.Parameter.ToString()}");
             else if (e.Parameter.ToString() == "user2") // Если пользователь вошел в систему под ником user2, то его приветствуют как user2
                 txtBlockWelcome.Text = ($"Welcome, {e.Parameter.ToString()}");
+            else 
+                txtBlockWelcome.Text = ($"Welcome, { e.Parameter.ToString()}"); // Если новый пользователь, то приветствуют как нового пользователя
         }
     }
 }
