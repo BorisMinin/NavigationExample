@@ -19,5 +19,10 @@
                          PasswordChanged="txtPassword_PasswordChanged"/>
             <Button Name="btnEnter" HorizontalAlignment="Center" Content="Enter" IsEnabled="False" Click="btnEnter_Click"/>
         </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <TextBlock Text="Login: user1 or user2"/>
+            <TextBlock Text="Password: passw1 or passw2"/>
+        </StackPanel>
     </Grid>
 </Page>

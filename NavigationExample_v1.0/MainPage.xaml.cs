@@ -30,7 +30,7 @@ namespace NavigationExample_v1._0
 
         #region Функции проверки введенных значений с сохраненными 
         /// <summary>
-        /// Функция сравнивает значение введенное пользователем(login) с сохраненным
+        /// Функция сравнивает введенное значение с сохраненным для поля txtLogin
         /// </summary>
         /// <param name="entered">введенное значение</param>
         /// <param name="saved">сохраненное значение</param>
@@ -45,7 +45,7 @@ namespace NavigationExample_v1._0
             else return false;
         }
         /// <summary>
-        /// Функция сравнивает значение введенное пользователем(password) с сохраненным
+        /// Функция сравнивает введенное значение с сохраненным для поля txtPassword   
         /// </summary>
         /// <param name="entered">введенное значение</param>
         /// <param name="saved">сохраненное значение</param>
@@ -60,7 +60,7 @@ namespace NavigationExample_v1._0
             else return false;
         }
         /// <summary>
-        /// Проверяет заполнены ли поля txtLogin и txtPassword 
+        /// Проверяет на заполнение поля txtLogin и txtPassword 
         /// </summary>
         /// <param name="login">логин</param>
         /// <param name="password">пароль</param>
@@ -70,9 +70,9 @@ namespace NavigationExample_v1._0
         /// </returns>
         bool IsLoginAndPasswordFilled(string login, string password)
         {
-            bool IsLoginFilled = !(string.IsNullOrEmpty(login)); // проверяет не заполнена ли строка логина
-            bool IsPasswordFilled = !(string.IsNullOrEmpty(password)); // проверяет не заполнена ли строка пароля
-            bool result = IsLoginFilled & IsPasswordFilled; // проверяет не заполнены ли строки логин и пароль
+            bool IsLoginFilled = !(string.IsNullOrEmpty(login)); // проверка строки txtLogin
+            bool IsPasswordFilled = !(string.IsNullOrEmpty(password)); // проверка строки txtPassword
+            bool result = IsLoginFilled & IsPasswordFilled; // проверка строк txtLogin и txtPassword
             return result; // возвращает ответ(необходим для отладки)
         }
         #endregion
@@ -104,10 +104,10 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            var list = UserRepository.AllUsers(); // инициализация класса UserRepository
+            var list = UserRepository.AllUsers(); 
 
-            entered_login = txtLogin.Text; //переменная хранит в себе значение полученное из поля логина
-            entered_password = txtPassword.Password; //переменная хранит в себе значение полученное из поля пароля
+            entered_login = txtLogin.Text; // присвоение переменной текста из txtLogin
+            entered_password = txtPassword.Password; // присвоение переменной текста из txtPassword
 
             /// <summary>
             /// осуществляет навигацию на UserPage в случае если данные введены корректно, а в случае если данные введены некорректно, осуществляет навигацию на RegistrationView
@@ -119,6 +119,7 @@ namespace NavigationExample_v1._0
                     txtLogin.Text = ""; 
                     txtPassword.Password = "";
                     Frame.Navigate(typeof(UserPage), user.Login); // Осуществляется навигация на страницу UserPage
+                    break;
                 }
                 else // В противном случае осуществляется навигация на страницу RegistrationView
                 {

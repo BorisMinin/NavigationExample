@@ -9,10 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel Margin="290">
-            <TextBlock Text="New user registration" HorizontalAlignment="Center"/>
-        </StackPanel>
         <StackPanel Margin="50" VerticalAlignment="Center">
+            <TextBlock Text="New user registration" HorizontalAlignment="Center"/>
             <TextBlock Text="Login" HorizontalAlignment="Center" />
             <TextBox Name="txtLoginReg" HorizontalAlignment="Center" Width="300" TextChanged="TxtLoginReg_TextChanged"/>
             <TextBlock Text="Password" HorizontalAlignment="Center" />
