@@ -18,11 +18,6 @@ namespace NavigationExample_v1._0
 {
     public sealed partial class MainPage : Page
     {
-        #region Переменные и коллекции 
-        string entered_login; // Переменная для хранения введенного пользователем значения login 
-        string entered_password; // Переменная для хранения введенного пользователем значения password
-        #endregion
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -55,7 +50,7 @@ namespace NavigationExample_v1._0
         /// </returns>
         bool IsPasswordTrue(string entered, string saved)
         {
-            if (entered == saved) 
+            if (entered == saved)
                 return true;
             else return false;
         }
@@ -85,7 +80,7 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password); // Кнопка Enter будет доступна, если поля логин и пароль не будут заполнены
+            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password); // Доступность кнопки brnEnter в случае заполненности полей txtLogint и txtPassword 
         }
         /// <summary>
         /// Обработчик событий для поля Password
@@ -94,41 +89,48 @@ namespace NavigationExample_v1._0
         /// <param name="e"></param>
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password); // Кнопка Enter будет доступна, если поля логин и пароль не будут заполнены
+            btnEnter.IsEnabled = IsLoginAndPasswordFilled(txtLogin.Text, txtPassword.Password); // Доступность кнопки brnEnter в случае заполненности полей txtLogint и txtPassword
         }
 
         /// <summary>
-        /// Обработчик событий для кнопки Enter, в котором будет возвращаться текст для случая, если данные верны и для случая, если данные не верны
+        /// Проверка логина и пароля, а так же навигация
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            var list = UserRepository.AllUsers(); 
-
-            entered_login = txtLogin.Text; // присвоение переменной текста из txtLogin
-            entered_password = txtPassword.Password; // присвоение переменной текста из txtPassword
-
-            /// <summary>
-            /// осуществляет навигацию на UserPage в случае если данные введены корректно, а в случае если данные введены некорректно, осуществляет навигацию на RegistrationView
-            /// </summary>
-            foreach (User user in list)
-            {
-                if (user.Login == entered_login & user.Password == entered_password) // Если введенные логин и пароль, совпадают с сохраненными, то осуществляется навигация на страницу UserPage 
-                {
-                    txtLogin.Text = ""; 
-                    txtPassword.Password = "";
-                    Frame.Navigate(typeof(UserPage), user.Login); // Осуществляется навигация на страницу UserPage
-                    break;
-                }
-                else // В противном случае осуществляется навигация на страницу RegistrationView
-                {
-                    txtLogin.Text = "";
-                    txtPassword.Password = "";
-                    Frame.Navigate(typeof(RegistrationView)); // Осуществляется навигация на страницу RegistrationView
-                }
-            }
+            User user = IsUserRegistered(txtLogin.Text, txtPassword.Password);
+            Navigation(user);
         }
-        #endregion
+
+        /// <summary>
+        /// Сравнение введенного логина и сохраненного
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns>
+        /// user-если совпадает
+        /// null-если не совпадает
+        /// </returns>
+        private User IsUserRegistered(string login, string password)
+        {
+            foreach (User user in UserRepository.AllUsers())
+            {
+                if (user.Login == login & user.Password == password)
+                    return user;
+            }
+            return null;
+        }
+        /// <summary>
+        /// Навигация, если метод IsUserRegistered возвращает null, то навигация на RegistrationView, иначе навигация на UserPage
+        /// </summary>
+        /// <param name="user"></param>
+        private void Navigation(User user)
+        {
+            if (user == null) Frame.Navigate(typeof(RegistrationView));
+            else Frame.Navigate(typeof(UserPage), user.Login);
+        }
     }
+    #endregion
+
 }
